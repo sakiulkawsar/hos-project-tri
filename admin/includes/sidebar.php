@@ -35,7 +35,7 @@
 					<ul>
 						<li><a href="add_payment.php">Add payment</a></li>
 						<li><a href="manage-pament.php">Manage payment</a></li>
-						<li><a href="view.php">View payment</a></li>
+						<li><a href="view-pament.php">View payment</a></li>
 					</ul>
 				</li>
 

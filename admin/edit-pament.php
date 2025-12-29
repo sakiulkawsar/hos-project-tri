@@ -12,15 +12,15 @@ $id = intval($_GET['id']);
 
 if (isset($_POST['submit'])) {
 
-    $name   = $_POST['name'];
+  
     $tmeal   = $_POST['tmeal'];
     $due   =$_POST['due'];
     $amount = $_POST['amount'];
     $tamount = $_POST['tamount'];
 
-    $query = "UPDATE pament SET name=?, tmeal=?, due=?, amount=?, tamount=? WHERE id=?";
+    $query = "UPDATE pament SET tmeal=?, due=?, amount=?, tamount=? WHERE id=?";
     $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("siiiii", $name, $tmeal, $due, $amount, $tamount, $id);
+    $stmt->bind_param("iiiii", $tmeal, $due, $amount, $tamount, $id);
     $stmt->execute();
 
     echo "<script>alert('Payment Details Updated Successfully');</script>";
@@ -51,14 +51,6 @@ $row = $res->fetch_object();
 
     <form method="post" class="form-horizontal">
 
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Name</label>
-            <div class="col-sm-8">
-                <input type="text" name="name"
-                       value="<?php echo $row->name; ?>"
-                       class="form-control" required>
-            </div>
-        </div>
 
         <div class="form-group">
             <label class="col-sm-2 control-label">Total meal</label>

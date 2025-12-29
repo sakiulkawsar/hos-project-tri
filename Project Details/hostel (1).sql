@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2025 at 08:27 AM
+-- Generation Time: Dec 29, 2025 at 05:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `hostel2`
+-- Database: `hostel`
 --
 
 -- --------------------------------------------------------
@@ -205,16 +205,11 @@ CREATE TABLE `mill` (
 
 INSERT INTO `mill` (`id`, `brackfast`, `lunch`, `dinner`, `tmeal`, `tomeal`, `registration_id`) VALUES
 (6, 0, 0, 1, 0, 0, 2),
-(8, 0, 0, 1, 0, 0, NULL),
-(10, 0, 0, 1, 0, 0, NULL),
-(13, 0, 3, 1, 0, 0, NULL),
-(20, 1, 0, 4, 7, 7, NULL),
-(22, 2, 0, 1, 3, 6, NULL),
-(23, 1, 3, 4, 8, 8, NULL),
-(24, 1, 0, 3, 6, 6, NULL),
-(25, 1, 1, 1, 3, 3, NULL),
-(26, 1, 1, 1, 3, 3, 3),
-(27, 1, 3, 1, 5, 5, 4);
+(27, 1, 3, 1, 5, 5, 4),
+(28, 1, 1, 1, 3, 3, 5),
+(29, 1, 1, 1, 3, 3, 7),
+(33, 1, 0, 1, 3, 3, 6),
+(34, 1, 0, 6, 11, 14, 8);
 
 -- --------------------------------------------------------
 
@@ -251,30 +246,32 @@ INSERT INTO `orders` (`id`, `name`, `email`, `phone`, `amount`, `address`, `stat
 
 CREATE TABLE `pament` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
   `tmeal` varchar(50) NOT NULL,
   `due` varchar(20) NOT NULL,
   `amount` varchar(50) NOT NULL,
-  `tamount` int(20) NOT NULL
+  `tamount` int(20) NOT NULL,
+  `registration_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pament`
 --
 
-INSERT INTO `pament` (`id`, `name`, `tmeal`, `due`, `amount`, `tamount`) VALUES
-(14, 'korim', '40', '300', '400', 400),
-(15, 'bahar', '50', '400', '40', 40),
-(16, 'rohim', '20', '400', '20', 800),
-(17, 'sakiul', '20', '500', '50', 1500),
-(18, 'rohim', '40', '500', '40', 2100),
-(19, 'ruhul', '30', '400', '40', 1600),
-(21, 'sakiul@', '40', '500', '40', 40),
-(22, 'hormi', '40', '500', '40', 2100),
-(23, 'abdur rahoman', '233', '332', '2500', 33),
-(24, 'Shea Knowles', '50', '2000', '40', 4000),
-(25, 'Mikayla Newton', '50', '400', '60', 3400),
-(26, 'Harriet Ochoa', '50', '2000', '20', 3000);
+INSERT INTO `pament` (`id`, `tmeal`, `due`, `amount`, `tamount`, `registration_id`) VALUES
+(16, '20', '400', '200', 200, NULL),
+(17, '20', '500', '50', 1500, NULL),
+(18, '40', '500', '40', 2100, NULL),
+(19, '30', '400', '40', 1600, NULL),
+(21, '40', '500', '40', 40, NULL),
+(22, '40', '500', '40', 2100, NULL),
+(23, '233', '332', '2500', 33, NULL),
+(24, '50', '2000', '40', 4000, NULL),
+(25, '50', '400', '60', 3400, NULL),
+(26, '50', '2000', '20', 3000, NULL),
+(27, '40', '300', '20', 1100, NULL),
+(28, '40', '300', '30', 1500, NULL),
+(29, '50', '300', '3000', 150300, 6),
+(30, '50', '50', '50', 2550, 8);
 
 --
 -- Triggers `pament`
@@ -497,11 +494,37 @@ CREATE TABLE `vw_student_meal_summary` (
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `vw_student_payment_summary`
+-- (See below for the actual view)
+--
+CREATE TABLE `vw_student_payment_summary` (
+`student_id` int(11)
+,`firstName` varchar(500)
+,`lastName` varchar(500)
+,`roomno` int(11)
+,`paid_meal` varchar(50)
+,`due` varchar(20)
+,`amount` varchar(50)
+,`total_amount` int(20)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `vw_student_meal_summary`
 --
 DROP TABLE IF EXISTS `vw_student_meal_summary`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_student_meal_summary`  AS SELECT `r`.`id` AS `student_id`, `r`.`firstName` AS `firstName`, `r`.`lastName` AS `lastName`, `r`.`roomno` AS `roomno`, ifnull(`m`.`brackfast`,0) AS `brackfast`, ifnull(`m`.`lunch`,0) AS `lunch`, ifnull(`m`.`dinner`,0) AS `dinner`, ifnull(`m`.`brackfast`,0) + ifnull(`m`.`lunch`,0) + ifnull(`m`.`dinner`,0) AS `total_meal` FROM (`registration` `r` left join `mill` `m` on(`r`.`id` = `m`.`registration_id`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `vw_student_payment_summary`
+--
+DROP TABLE IF EXISTS `vw_student_payment_summary`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_student_payment_summary`  AS SELECT `r`.`id` AS `student_id`, `r`.`firstName` AS `firstName`, `r`.`lastName` AS `lastName`, `r`.`roomno` AS `roomno`, ifnull(`p`.`tmeal`,0) AS `paid_meal`, ifnull(`p`.`due`,0) AS `due`, ifnull(`p`.`amount`,0) AS `amount`, ifnull(`p`.`tamount`,0) AS `total_amount` FROM (`registration` `r` left join `pament` `p` on(`r`.`id` = `p`.`registration_id`)) ;
 
 --
 -- Indexes for dumped tables
@@ -560,7 +583,8 @@ ALTER TABLE `orders`
 -- Indexes for table `pament`
 --
 ALTER TABLE `pament`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_pament_registration` (`registration_id`);
 
 --
 -- Indexes for table `registration`
@@ -638,7 +662,7 @@ ALTER TABLE `font`
 -- AUTO_INCREMENT for table `mill`
 --
 ALTER TABLE `mill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -650,7 +674,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `pament`
 --
 ALTER TABLE `pament`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `registration`
@@ -691,6 +715,12 @@ ALTER TABLE `userregistration`
 --
 ALTER TABLE `mill`
   ADD CONSTRAINT `fk_mill_registration` FOREIGN KEY (`registration_id`) REFERENCES `registration` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pament`
+--
+ALTER TABLE `pament`
+  ADD CONSTRAINT `fk_pament_registration` FOREIGN KEY (`registration_id`) REFERENCES `registration` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

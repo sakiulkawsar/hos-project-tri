@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 
 include('includes/config.php');
 
-$sql = "SELECT * FROM pament_list";
+$sql = "SELECT * FROM vw_student_payment_summary";
 $result = $mysqli->query($sql);
 ?>
 <!doctype html>
@@ -37,33 +37,35 @@ $result = $mysqli->query($sql);
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="page-title" style="margin-top: 4%">Manage payment</h2>
+                        <h2 class="page-title" style="margin-top: 4%">View payment</h2>
                         <div class="panel panel-default">
-                            <div class="panel-heading">All payment Details</div>
+                            <div class="panel-heading">All view payment Details</div>
                             <div class="panel-body">
                                 <table id="zctb" class="display table table-striped table-bordered table-hover"
                                     cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
-                                            <th>id</th>
-                                            <th>name</th>
-                                            <th>meal</th>
-                                            <th>due</th>
-                                            <th>amount</th>
-                                            <th>mill</th>
-                                            <th>gender</th>
+                                      <th>Student id</th>
+                                            <th>First name</th>
+                                            <th>Last name</th>
+                                            <th>Room no</th>
+                                            <th>Paid meal</th>
+                                            <th>Due meal</th>
+                                            <th>Amount</th>
+                                            <th>Total amount</th>
 
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>id</th>
-                                            <th>name</th>
-                                            <th>meal</th>
-                                            <th>due</th>
-                                            <th>amount</th>
-                                            <th>mill</th>
-                                            <th>gender</th>
+                                            <th>Student id</th>
+                                            <th>First name</th>
+                                            <th>Last name</th>
+                                            <th>Room no</th>
+                                            <th>Paid meal</th>
+                                            <th>Due meal</th>
+                                            <th>Amount</th>
+                                            <th>Total amount</th>
 
                                         </tr>
                                     </tfoot>
@@ -73,18 +75,20 @@ $result = $mysqli->query($sql);
         while ($row = $result->fetch_assoc()) {
     ?>
                                         <tr>
-                                            <td><?php echo $row['id']; ?></td>
-                                            <td><?php echo $row['name']; ?></td>
-                                            <td><?php echo $row['meal']; ?></td>
+                                            <td><?php echo $row['student_id']; ?></td>
+                                            <td><?php echo $row['firstName']; ?></td>
+                                            <td><?php echo $row['lastName']; ?></td>
+                                            <td><?php echo $row['roomno']; ?></td>
+                                            <td><?php echo $row['paid_meal']; ?></td>
                                             <td><?php echo $row['due']; ?></td>
                                             <td><?php echo $row['amount']; ?></td>
-                                            <td><?php echo $row['mill']; ?></td>
-                                            <td><?php echo $row['gender']; ?></td>
+                                            <td><?php echo $row['total_amount']; ?></td>
+                                            
                                         </tr>
                                         <?php
         }
     } else {
-        echo "<tr><td colspan='7'>No data found</td></tr>";
+        echo "<tr><td colspan='8'>No data found</td></tr>";
     }
     ?>
 

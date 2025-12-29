@@ -54,7 +54,7 @@ $stmt->bind_param('i', $id);
 										<tr>
 											<th>Sno.</th>
 										
-											<th>Name</th>
+											
 											<th>Total meal</th>
 											<th>Due amount </th>
 											<th>Meal rate </th>
@@ -67,7 +67,7 @@ $stmt->bind_param('i', $id);
 										<tr>
 												<th>Sno.</th>
 										
-											<th>Name</th>
+										
 											<th>Total meal</th>
 											<th>Due amount </th>
 											<th>Meal rate </th>
@@ -89,7 +89,7 @@ while($row = $res->fetch_object()) {
 ?>
 <tr>
     <td><?php echo $cnt; ?></td>
-    <td><?php echo $row->name; ?></td>
+    
     <td><?php echo $row->tmeal; ?></td>
     <td><?php echo $row->due; ?></td>
     <td><?php echo $row->amount; ?></td>
