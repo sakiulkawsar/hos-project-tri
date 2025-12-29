@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2025 at 07:30 PM
+-- Generation Time: Dec 29, 2025 at 08:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -191,28 +191,30 @@ INSERT INTO `font` (`id`, `name`, `email`, `message`) VALUES
 
 CREATE TABLE `mill` (
   `id` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL,
   `brackfast` int(100) NOT NULL,
   `lunch` int(50) NOT NULL,
   `dinner` int(15) NOT NULL,
   `tmeal` int(11) NOT NULL,
   `tomeal` int(11) NOT NULL,
-  `gender` enum('Male','Female','Other') NOT NULL
+  `registration_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `mill`
 --
 
-INSERT INTO `mill` (`id`, `name`, `brackfast`, `lunch`, `dinner`, `tmeal`, `tomeal`, `gender`) VALUES
-(6, 'Accusamus deserunt u', 0, 0, 1, 0, 0, 'Male'),
-(8, 'Ipsa ipsa consequa', 0, 0, 1, 0, 0, 'Male'),
-(10, 'Nostrum eveniet et ', 0, 0, 1, 0, 0, 'Male'),
-(13, '101', 0, 3, 1, 0, 0, 'Male'),
-(20, 'sakiul', 1, 0, 4, 7, 7, ''),
-(22, 'kawsar', 2, 0, 1, 3, 6, ''),
-(23, 'ruhul', 1, 3, 4, 8, 8, 'Female'),
-(24, 'kaw', 1, 0, 3, 6, 6, '');
+INSERT INTO `mill` (`id`, `brackfast`, `lunch`, `dinner`, `tmeal`, `tomeal`, `registration_id`) VALUES
+(6, 0, 0, 1, 0, 0, 2),
+(8, 0, 0, 1, 0, 0, NULL),
+(10, 0, 0, 1, 0, 0, NULL),
+(13, 0, 3, 1, 0, 0, NULL),
+(20, 1, 0, 4, 7, 7, NULL),
+(22, 2, 0, 1, 3, 6, NULL),
+(23, 1, 3, 4, 8, 8, NULL),
+(24, 1, 0, 3, 6, 6, NULL),
+(25, 1, 1, 1, 3, 3, NULL),
+(26, 1, 1, 1, 3, 3, 3),
+(27, 1, 3, 1, 5, 5, 4);
 
 -- --------------------------------------------------------
 
@@ -270,7 +272,9 @@ INSERT INTO `pament` (`id`, `name`, `tmeal`, `due`, `amount`, `tamount`) VALUES
 (21, 'sakiul@', '40', '500', '40', 40),
 (22, 'hormi', '40', '500', '40', 2100),
 (23, 'abdur rahoman', '233', '332', '2500', 33),
-(24, 'Shea Knowles', '50', '2000', '40', 4000);
+(24, 'Shea Knowles', '50', '2000', '40', 4000),
+(25, 'Mikayla Newton', '50', '400', '60', 3400),
+(26, 'Harriet Ochoa', '50', '2000', '20', 3000);
 
 --
 -- Triggers `pament`
@@ -473,6 +477,32 @@ INSERT INTO `userregistration` (`id`, `regNo`, `firstName`, `middleName`, `lastN
 (7, 'Non ut qui dolore cu', 'Hilda Mcdowell', 'Kirk Zamora', 'Tara Levy', 'male', 0, 'fazedagogo@mailinator.com', 'Explicabo Quibusdam', '2025-12-13 11:50:35', NULL, NULL),
 (8, 'Non id amet dolore', 'Cecilia Gates', 'Hannah Jennings', 'William Schneider', 'female', 0, 'kudalecux@mailinator.com', 'Dolore qui non sequi', '2025-12-17 17:12:06', NULL, NULL);
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `vw_student_meal_summary`
+-- (See below for the actual view)
+--
+CREATE TABLE `vw_student_meal_summary` (
+`student_id` int(11)
+,`firstName` varchar(500)
+,`lastName` varchar(500)
+,`roomno` int(11)
+,`brackfast` int(100)
+,`lunch` int(50)
+,`dinner` int(15)
+,`total_meal` bigint(67)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `vw_student_meal_summary`
+--
+DROP TABLE IF EXISTS `vw_student_meal_summary`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_student_meal_summary`  AS SELECT `r`.`id` AS `student_id`, `r`.`firstName` AS `firstName`, `r`.`lastName` AS `lastName`, `r`.`roomno` AS `roomno`, ifnull(`m`.`brackfast`,0) AS `brackfast`, ifnull(`m`.`lunch`,0) AS `lunch`, ifnull(`m`.`dinner`,0) AS `dinner`, ifnull(`m`.`brackfast`,0) + ifnull(`m`.`lunch`,0) + ifnull(`m`.`dinner`,0) AS `total_meal` FROM (`registration` `r` left join `mill` `m` on(`r`.`id` = `m`.`registration_id`)) ;
+
 --
 -- Indexes for dumped tables
 --
@@ -518,7 +548,7 @@ ALTER TABLE `font`
 --
 ALTER TABLE `mill`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `studentId` (`name`);
+  ADD KEY `fk_mill_registration` (`registration_id`);
 
 --
 -- Indexes for table `orders`
@@ -608,7 +638,7 @@ ALTER TABLE `font`
 -- AUTO_INCREMENT for table `mill`
 --
 ALTER TABLE `mill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -620,7 +650,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `pament`
 --
 ALTER TABLE `pament`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `registration`
@@ -651,6 +681,16 @@ ALTER TABLE `userlog`
 --
 ALTER TABLE `userregistration`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `mill`
+--
+ALTER TABLE `mill`
+  ADD CONSTRAINT `fk_mill_registration` FOREIGN KEY (`registration_id`) REFERENCES `registration` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
