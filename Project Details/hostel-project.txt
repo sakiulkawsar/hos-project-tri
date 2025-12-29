@@ -1,0 +1,36 @@
+✅ PROJECT DETAILS
+
+1. Project Name: Hostel Management System.
+
+2. 📝 Project Description
+
+A web-based application that allows an admin to add, view, update and delete student and room information . 
+It stores records in a MySQL database and displays the data on a dashboard using PHP.
+
+3. Project Objective
+
+To learn database CRUD operations using PHP & MySQL
+
+To manage product records digitally
+
+To practice sessions and authentication
+
+⚙️ Features
+
+Admin login system
+
+View room list
+
+Update & delete student records
+
+Update & delete rooms records
+
+🛠️ Technology Used
+
+Backend: PHP
+
+Database: MySQL
+
+Frontend: 
+
+Server: XAMPP
