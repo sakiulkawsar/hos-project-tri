@@ -49,6 +49,7 @@
 					<ul>
 						<li><a href="add-mill.php">Add meal</a></li>
 						<li><a href="manage-mill.php">Manage meal</a></li>
+						<li><a href="meal-view.php">Meal view</a></li>
 						
 					</ul>
 				</li>

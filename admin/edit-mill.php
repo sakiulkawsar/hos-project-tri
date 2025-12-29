@@ -6,35 +6,38 @@ check_login();
 //code for add courses
 if (isset($_POST['submit'])) {
 
-    $id        = $_GET['id'];
-    $name = $_POST['name'];
-    $brackfast  = $_POST['brackfast'];
-    $lunch      = $_POST['lunch'];
-    $dinner     = $_POST['dinner'];
-    $tmeal     = $_POST['tmeal'];
-    $tomeal     = $_POST['tomeal'];
-    $gender    = $_POST['gender'];
+    $id = intval($_GET['id']);
+
+    $brackfast       = (int)$_POST['brackfast'];
+    $lunch           = (int)$_POST['lunch'];
+    $dinner          = (int)$_POST['dinner'];
+    $tmeal           = (int)$_POST['tmeal'];
+    $tomeal          = (int)$_POST['tomeal'];
+    $registration_id = (int)$_POST['registration_id'];
 
     $query = "UPDATE mill 
-              SET name=?, brackfast=?, lunch=?, dinner=?, tmeal=?, tomeal=?, gender=?
+              SET brackfast=?, lunch=?, dinner=?, tmeal=?, tomeal=?, registration_id=?
               WHERE id=?";
 
     $stmt = $mysqli->prepare($query);
     $stmt->bind_param(
-        'siiiiiii',
-        $name,
+        'iiiiiii',
         $brackfast,
         $lunch,
         $dinner,
         $tmeal,
         $tomeal,
-        $gender,
+        $registration_id,
         $id
     );
-    $stmt->execute();
+
+    if (!$stmt->execute()) {
+        die("Update failed: " . $stmt->error);
+    }
 
     echo "<script>alert('Mill details updated successfully');</script>";
 }
+
 
 
 ?>
@@ -97,13 +100,7 @@ if (isset($_GET['id'])) {
 									<div class="panel-heading">Edit Room Details</div>
 									<form method="post" class="form-horizontal">
 
-<div class="form-group">
-<label class="col-sm-2 control-label">Student Name</label>
-<div class="col-sm-8">
-<input type="text" name="name" class="form-control"
-value="<?php echo $row->name; ?>">
-</div>
-</div>
+
 
 <div class="form-group">
 <label class="col-sm-2 control-label">Breakfast</label>
@@ -147,10 +144,10 @@ value="<?php echo $row->tomeal; ?>">
 </div>
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Gender</label>
+<label class="col-sm-2 control-label">Registration_id</label>
 <div class="col-sm-8">
-<input type="text" name="gender" class="form-control"
-value="<?php echo $row->gender; ?>">
+<input type="text" name="registration_id" class="form-control"
+value="<?php echo $row->registration_id; ?>">
 </div>
 </div>
 
