@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2025 at 05:19 PM
+-- Generation Time: Dec 31, 2025 at 09:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -209,7 +209,8 @@ INSERT INTO `mill` (`id`, `brackfast`, `lunch`, `dinner`, `tmeal`, `tomeal`, `re
 (28, 1, 1, 1, 3, 3, 5),
 (29, 1, 1, 1, 3, 3, 7),
 (33, 1, 0, 1, 3, 3, 6),
-(34, 1, 0, 6, 11, 14, 8);
+(34, 1, 0, 6, 11, 14, 8),
+(35, 1, 1, 1, 3, 17, 8);
 
 -- --------------------------------------------------------
 
@@ -477,6 +478,46 @@ INSERT INTO `userregistration` (`id`, `regNo`, `firstName`, `middleName`, `lastN
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `details` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `title`, `details`) VALUES
+(1, 'ff', 'ff');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_request`
+--
+
+CREATE TABLE `users_request` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `comment` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users_request`
+--
+
+INSERT INTO `users_request` (`id`, `name`, `email`, `mobile`, `comment`) VALUES
+(1, 'brb', 'rohim@gamil.com', '01545852455', 'fghtrgfg');
+
+-- --------------------------------------------------------
+
+--
 -- Stand-in structure for view `vw_student_meal_summary`
 -- (See below for the actual view)
 --
@@ -619,6 +660,18 @@ ALTER TABLE `userregistration`
   ADD KEY `email` (`email`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users_request`
+--
+ALTER TABLE `users_request`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -662,7 +715,7 @@ ALTER TABLE `font`
 -- AUTO_INCREMENT for table `mill`
 --
 ALTER TABLE `mill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -705,6 +758,18 @@ ALTER TABLE `userlog`
 --
 ALTER TABLE `userregistration`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `users_request`
+--
+ALTER TABLE `users_request`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

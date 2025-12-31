@@ -52,7 +52,7 @@ $result = $mysqli->query($sql);
                                             <th>Breackfast</th>
                                             <th>Lunch</th>
                                             <th>Dinner</th>
-                                            <th>Total meal</th>
+                                            <th>Today meal</th>
 
                                         </tr>
                                     </thead>
@@ -65,7 +65,7 @@ $result = $mysqli->query($sql);
                                             <th>Breackfast</th>
                                             <th>Lunch</th>
                                             <th>Dinner</th>
-                                            <th>Total meal</th>
+                                            <th>Today meal</th>
 
                                         </tr>
                                     </tfoot>
