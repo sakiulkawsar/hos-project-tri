@@ -1,8 +1,4 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
 include_once('../config.php');
 
 // echo "Hello";
@@ -13,13 +9,19 @@ $data = json_decode($data);
 
 $name = $data->name;
 $email = $data->email;
-$phone = $data->phone;
+$phone = $data->mobile;
 $comment = $data->comment;
+
+
+$sql = "INSERT INTO `users_request`(`name`, `email`, `mobile`, `comment`) VALUES ('$name','$email','$phone','$comment')";
+
+
 if($name!=''&& $email!=''&& $phone!=''&& $comment!=''){
 
-$db->query("INSERT INTO test VALUE(NULL, '$title', '$details', '$phone', '$comment')");
+$mysqli->query("$sql");
+
 }
-if($db->affected_rows){
+if($mysqli->affected_rows){
     echo "Successfully add";
 }
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 31, 2025 at 09:33 PM
+-- Generation Time: Jan 01, 2026 at 08:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -274,20 +274,6 @@ INSERT INTO `pament` (`id`, `tmeal`, `due`, `amount`, `tamount`, `registration_i
 (29, '50', '300', '3000', 150300, 6),
 (30, '50', '50', '50', 2550, 8);
 
---
--- Triggers `pament`
---
-DELIMITER $$
-CREATE TRIGGER `trg_update_mill_tmeal` AFTER UPDATE ON `pament` FOR EACH ROW BEGIN
-    IF OLD.tmeal <> NEW.tmeal THEN
-        UPDATE mill
-        SET tmeal = NEW.tmeal
-        WHERE name = NEW.name;
-    END IF;
-END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -513,7 +499,9 @@ CREATE TABLE `users_request` (
 --
 
 INSERT INTO `users_request` (`id`, `name`, `email`, `mobile`, `comment`) VALUES
-(1, 'brb', 'rohim@gamil.com', '01545852455', 'fghtrgfg');
+(1, 'brb', 'rohim@gamil.com', '01545852455', 'fghtrgfg'),
+(2, 'sakiul kawsar', 'mr.sakiulkawsar@gmail.com', '12354', 'sdf'),
+(4, 'sakiul kawsar jibon', 'admin@gmail.com', '4552452452452', 'hgjfdhdfhgf');
 
 -- --------------------------------------------------------
 
@@ -596,76 +584,6 @@ ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `feedback`
---
-ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `font`
---
-ALTER TABLE `font`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `mill`
---
-ALTER TABLE `mill`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_mill_registration` (`registration_id`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `pament`
---
-ALTER TABLE `pament`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pament_registration` (`registration_id`);
-
---
--- Indexes for table `registration`
---
-ALTER TABLE `registration`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `rooms`
---
-ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `room_no` (`room_no`);
-
---
--- Indexes for table `states`
---
-ALTER TABLE `states`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `userlog`
---
-ALTER TABLE `userlog`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `userregistration`
---
-ALTER TABLE `userregistration`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `email` (`email`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users_request`
 --
 ALTER TABLE `users_request`
@@ -676,116 +594,10 @@ ALTER TABLE `users_request`
 --
 
 --
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `complainthistory`
---
-ALTER TABLE `complainthistory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `complaints`
---
-ALTER TABLE `complaints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `courses`
---
-ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `feedback`
---
-ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `font`
---
-ALTER TABLE `font`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `mill`
---
-ALTER TABLE `mill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `pament`
---
-ALTER TABLE `pament`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
---
--- AUTO_INCREMENT for table `registration`
---
-ALTER TABLE `registration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `rooms`
---
-ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `states`
---
-ALTER TABLE `states`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-
---
--- AUTO_INCREMENT for table `userlog`
---
-ALTER TABLE `userlog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `userregistration`
---
-ALTER TABLE `userregistration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `users_request`
 --
 ALTER TABLE `users_request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `mill`
---
-ALTER TABLE `mill`
-  ADD CONSTRAINT `fk_mill_registration` FOREIGN KEY (`registration_id`) REFERENCES `registration` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `pament`
---
-ALTER TABLE `pament`
-  ADD CONSTRAINT `fk_pament_registration` FOREIGN KEY (`registration_id`) REFERENCES `registration` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
