@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2026 at 08:53 AM
+-- Generation Time: Jan 03, 2026 at 06:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -274,6 +274,20 @@ INSERT INTO `pament` (`id`, `tmeal`, `due`, `amount`, `tamount`, `registration_i
 (29, '50', '300', '3000', 150300, 6),
 (30, '50', '50', '50', 2550, 8);
 
+--
+-- Triggers `pament`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_update_mill_tmeal` AFTER UPDATE ON `pament` FOR EACH ROW BEGIN
+    IF OLD.tmeal <> NEW.tmeal THEN
+        UPDATE mill
+        SET tmeal = NEW.tmeal
+        WHERE name = NEW.name;
+    END IF;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -491,17 +505,23 @@ CREATE TABLE `users_request` (
   `name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `mobile` varchar(20) NOT NULL,
-  `comment` varchar(100) NOT NULL
+  `comment` varchar(100) NOT NULL,
+  `status` enum('pending','accepted','rejected') DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users_request`
 --
 
-INSERT INTO `users_request` (`id`, `name`, `email`, `mobile`, `comment`) VALUES
-(1, 'brb', 'rohim@gamil.com', '01545852455', 'fghtrgfg'),
-(2, 'sakiul kawsar', 'mr.sakiulkawsar@gmail.com', '12354', 'sdf'),
-(4, 'sakiul kawsar jibon', 'admin@gmail.com', '4552452452452', 'hgjfdhdfhgf');
+INSERT INTO `users_request` (`id`, `name`, `email`, `mobile`, `comment`, `status`) VALUES
+(3, 'sakiul', 'user4@example.com', '12354', 'grdjlfgh;lvcgfg', 'accepted'),
+(5, 'Rana Mays', 'vyxoj@mailinator.com', 'Explicabo Minima no', 'Non unde natus est a', 'accepted'),
+(6, 'Buckminster Slater', 'qofuwo@mailinator.com', 'Aspernatur et maiore', 'Cillum culpa dolore ', 'accepted'),
+(7, 'Whilemina Stokes', 'korizire@mailinator.com', '2345798996', 'Quasi ut odit tenetu', 'accepted'),
+(8, 'TaShya Wells', 'meja@mailinator.com', '45476665', 'Placeat voluptatem ', 'accepted'),
+(9, 'Charissa Santos', 'cufytu@mailinator.com', '578556', 'Fuga Ipsum adipisc', 'rejected'),
+(10, 'Charissa Santos', 'cufytu@mailinator.com', '5785566', 'Fuga Ipsum adipisc', 'accepted'),
+(11, 'Charissa Santos', 'cufytu@mailinator.com', '5785566', 'Fuga Ipsum adipisc', 'accepted');
 
 -- --------------------------------------------------------
 
@@ -584,6 +604,76 @@ ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `font`
+--
+ALTER TABLE `font`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `mill`
+--
+ALTER TABLE `mill`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_mill_registration` (`registration_id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pament`
+--
+ALTER TABLE `pament`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_pament_registration` (`registration_id`);
+
+--
+-- Indexes for table `registration`
+--
+ALTER TABLE `registration`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `room_no` (`room_no`);
+
+--
+-- Indexes for table `states`
+--
+ALTER TABLE `states`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `userlog`
+--
+ALTER TABLE `userlog`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `userregistration`
+--
+ALTER TABLE `userregistration`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `email` (`email`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users_request`
 --
 ALTER TABLE `users_request`
@@ -594,10 +684,116 @@ ALTER TABLE `users_request`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `complainthistory`
+--
+ALTER TABLE `complainthistory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `complaints`
+--
+ALTER TABLE `complaints`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `font`
+--
+ALTER TABLE `font`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `mill`
+--
+ALTER TABLE `mill`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `pament`
+--
+ALTER TABLE `pament`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `registration`
+--
+ALTER TABLE `registration`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `states`
+--
+ALTER TABLE `states`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `userlog`
+--
+ALTER TABLE `userlog`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `userregistration`
+--
+ALTER TABLE `userregistration`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `users_request`
 --
 ALTER TABLE `users_request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `mill`
+--
+ALTER TABLE `mill`
+  ADD CONSTRAINT `fk_mill_registration` FOREIGN KEY (`registration_id`) REFERENCES `registration` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pament`
+--
+ALTER TABLE `pament`
+  ADD CONSTRAINT `fk_pament_registration` FOREIGN KEY (`registration_id`) REFERENCES `registration` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
