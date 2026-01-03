@@ -5,6 +5,14 @@
 			
 				<!-- <li class="ts-label">Main</li> -->
 				<li><a href="dashboard.php"><i class="fa fa-dashboard" style="color: #fff;"></i> Dashboard</a></li>
+				
+
+					<li><a href="#"><i class="fa fa-desktop" style="color: #fff;"></i>Clint request</a>
+					<ul>
+						<li><a href="user-request.php">Clint request</a></li>
+						<li><a href="manage-requests.php">Manage request</a></li>
+					</ul>
+				</li>
 
 					<li><a href="#"><i class="fa fa-files-o" style="color: #fff;"></i> Courses</a>
 					<ul>
